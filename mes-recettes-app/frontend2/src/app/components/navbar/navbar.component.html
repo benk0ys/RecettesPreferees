@@ -1,0 +1,44 @@
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <h2>🍳 Mes Recettes</h2>
+    </div>
+    
+    <div class="nav-actions">
+      <button 
+        *ngIf="auth.isAuthenticated$ | async; else loginBtn" 
+        class="btn btn-primary"
+        (click)="onAddRecipe()">
+        ➕ Ajouter une recette
+      </button>
+      <ng-template #loginBtn>
+        <button 
+          *ngIf="!(auth.isAuthenticated$ | async)" 
+          class="btn btn-primary"
+          (click)="login()">
+          ➕ Ajouter une recette
+        </button>
+      </ng-template>
+      
+      <div class="auth-buttons">
+        <button 
+          *ngIf="!(auth.isAuthenticated$ | async)" 
+          class="btn btn-outline"
+          (click)="login()">
+          Se connecter
+        </button>
+        
+        <div *ngIf="auth.isAuthenticated$ | async" class="user-menu">
+          <span class="user-info">
+            Bonjour {{ (auth.user$ | async)?.name || (auth.user$ | async)?.email }}
+          </span>
+          <button 
+            class="btn btn-outline"
+            (click)="logout()">
+            Se déconnecter
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
